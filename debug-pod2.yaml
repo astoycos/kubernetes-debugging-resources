@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+  labels:
+    app: MyApp
+spec:      
+  containers:
+  - name: pod1
+    imagePullPolicy: Always
+    image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:cd334eeee3f0eabdceadb6a8153f24e543b7e3e9137097893feffc21c816899f
+    ports:
+      - containerPort: 8000
+    command:
+      - /sbin/init
+

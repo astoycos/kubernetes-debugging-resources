@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: webserver
+  namespace: test-network-policy
+spec:
+  host: webserver-test-network-policy.apps.npd.dc1.cloud.safran
+  to:
+    kind: Service
+    name: webserver
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

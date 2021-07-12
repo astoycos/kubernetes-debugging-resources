@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  labels:
+    app: webserver
+spec:
+   containers:
+    - name: client
+      image: gcr.io/google-samples/node-hello:1.0
+      ports:
+       - containerPort: 8080
+         protocol: TCP
+   #nodeSelector:
+     #kubernetes.io/hostname: ovn-worker
+

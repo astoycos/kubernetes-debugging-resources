@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all
+spec:
+  podSelector:
+    matchLabels:
+      name: test-pods
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: same-app-diff-ns-allow
+spec:
+  ingress:
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          name: test-pods
+  podSelector:
+    matchLabels:
+      name: test-pods
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: same-app-ns-allow
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          name: test-pods
+  podSelector:
+    matchLabels:
+      name: test-pods
+  policyTypes:
+  - Ingress
