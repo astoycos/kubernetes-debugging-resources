@@ -3,15 +3,18 @@ kind: Pod
 metadata:
   name: client-agnhost
   labels:
-    app: webserver-agnost
+    app: webserver
 spec:
-   containers:
+    containers:
     - name: client-agnhost
       image: k8s.gcr.io/e2e-test-images/agnhost:2.26
       args: ["netexec", "--http-port=8080"]
       ports:
-       - containerPort: 8080
-         protocol: TCP
-   #nodeSelector:
-     #kubernetes.io/hostname: ovn-worker2
+      - containerPort: 8080
+        protocol: TCP
+    - name: tools
+      image: centos/tools:latest
+      command: ["/bin/sleep", "3650d"]
+      securityContext:
+        privileged: true
 

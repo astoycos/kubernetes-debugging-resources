@@ -8,12 +8,43 @@ spec:
    containers:
     - name: client-agnhost-host-networked
       image: k8s.gcr.io/e2e-test-images/agnhost:2.26
-      args: ["netexec", "--http-port=8080"]
+      args: ["netexec", "--http-port=7879"]
       ports:
        - name: host-net
-         containerPort: 8080
+         containerPort: 7879
          protocol: TCP
    nodeSelector:
      kubernetes.io/hostname: ovn-worker2
    hostNetwork: true
 
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-agnhost-host-networked
+  labels:
+    app: webserver-agnost
+spec:
+  tolerations:
+  - key: "node-role.kubernetes.io/master"
+    operator: "Exists"
+    effect: "NoSchedule"
+  affinity:
+     nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+       nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - master-0-0
+  containers:
+   - name: client-agnhost-host-networked
+     image: k8s.gcr.io/e2e-test-images/agnhost:2.26
+     args: ["netexec", "--http-port=7879"]
+     ports:
+      - name: host-net
+        containerPort: 7879
+        protocol: TCP
+   hostNetwork: true

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: client-agnhost
+  name: client-agnhost-8081
   labels:
     app: webserver-agnost
 spec:
